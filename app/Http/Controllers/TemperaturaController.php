@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Helper\ConverterHelper;
 
 class TemperaturaController extends Controller
 {
@@ -27,6 +28,8 @@ class TemperaturaController extends Controller
      * diferencia positiva de dos temperaturas validas
      */
     public function diferencia() {
+        
+
         return view("diferenciaForm");
     }
 
@@ -34,8 +37,19 @@ class TemperaturaController extends Controller
     /**
      * Calcular la conversion de centigrados a Farenheit
      */
-    public function centigradosAFarenheitConvertir() {
-        // TODO convertir y mostrar la vista
+    public function centigradosAFarenheitConvertir(Request $request) {
+
+        $request->validate([
+            "centigrados"=>"numeric|min:-273.15",
+        ]);
+        
+        $centigrados = $request->input("centigrados");
+        // TODO  validar que sea numerico y mayor a 273.15
+
+
+        $farenheit = ConverterHelper::centigradosAFarenheit($centigrados);
+
+        return view("cent2farForm")->with("farenheit",$farenheit);
     }
 
     /**

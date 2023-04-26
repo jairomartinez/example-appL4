@@ -36,9 +36,9 @@ class TemperaturaFeatureTest extends TestCase
         $respuesta->assertSeeText("*");
 
          // Verificar que se muestra el menú
-         $response->assertSee("A Farenheit");
-         $response->assertSee("A Kelvin");
-         $response->assertSee("Diferencia");
+         $respuesta->assertSee("A Farenheit");
+         $respuesta->assertSee("A Kelvin");
+         $respuesta->assertSee("Diferencia");
 
 
     }
@@ -54,9 +54,9 @@ class TemperaturaFeatureTest extends TestCase
         $respuesta->assertSee("Calcular");
 
          // Verificar que se muestra el menú
-         $response->assertSee("A Farenheit");
-         $response->assertSee("A Kelvin");
-         $response->assertSee("Diferencia");
+         $respuesta->assertSee("A Farenheit");
+         $respuesta->assertSee("A Kelvin");
+         $respuesta->assertSee("Diferencia");
     }
 
     public function test_postConvertirAFarenheitValido() {
@@ -67,9 +67,9 @@ class TemperaturaFeatureTest extends TestCase
 
     public function test_postConvertirAFarenheitInvalido() {
         $response = $this->post("/", ["centigrados"=>-500]);
-        $response->assertSeeText("Temperatura inválida");
-        $response->assertSee("class='error'");
+        $response->assertSessionHasErrors(["centigrados"]);
 
+        
         $response->assertSeeText("Convertir a Farenheit");
         $response->assertSeeText("Convertir");
 
